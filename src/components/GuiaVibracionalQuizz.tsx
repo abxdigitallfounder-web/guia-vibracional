@@ -1617,8 +1617,27 @@ export default function GuiaVibracionalQuizz() {
 
     finalButton.addEventListener("click", onFinalButtonClick);
 
+    // Encaminha as UTMs (e xcod/sck) que chegaram na URL para o link de checkout,
+    // garantindo a atribuição da venda na UTMify.
+    function forwardParamsToCheckout() {
+      const incoming = new URLSearchParams(window.location.search);
+      if (Array.from(incoming).length === 0) {
+        return;
+      }
+      const link = root!.querySelector<HTMLAnchorElement>("#fq-buy-button");
+      if (!link) {
+        return;
+      }
+      const url = new URL(link.getAttribute("href")!, window.location.origin);
+      incoming.forEach(function (value, key) {
+        url.searchParams.set(key, value);
+      });
+      link.setAttribute("href", url.toString());
+    }
+
     createDays();
     preloadImages();
+    forwardParamsToCheckout();
     updateProgress(0);
 
     return () => {
