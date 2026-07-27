@@ -1617,22 +1617,58 @@ export default function GuiaVibracionalQuizz() {
 
     finalButton.addEventListener("click", onFinalButtonClick);
 
-    // Encaminha as UTMs (e xcod/sck) que chegaram na URL para o link de checkout,
-    // garantindo a atribuição da venda na UTMify.
+    // Encaminha os parâmetros de rastreamento do Facebook (UTMs, xcod, sck etc.)
+    // que chegaram na URL para o link de checkout, garantindo a atribuição da venda.
     function forwardParamsToCheckout() {
       const incoming = new URLSearchParams(window.location.search);
-      if (Array.from(incoming).length === 0) {
+      if (Array.from(incoming.entries()).length === 0) {
         return;
       }
+
       const link = root!.querySelector<HTMLAnchorElement>("#fq-buy-button");
       if (!link) {
         return;
       }
+
       const url = new URL(link.getAttribute("href")!, window.location.origin);
+      const forwardedParameters: Array<{ key: string; value: string }> = [];
+
+      const normalizeValue = (value: string) => {
+        const trimmed = value.trim();
+        if (!trimmed) {
+          return trimmed;
+        }
+
+        return trimmed.replace(/\s+/g, " ");
+      };
+
       incoming.forEach(function (value, key) {
-        url.searchParams.set(key, value);
+        const normalizedKey = key.trim().toLowerCase();
+        const normalizedValue = normalizeValue(value);
+        const shouldForward =
+          normalizedKey === "xcod" ||
+          normalizedKey === "sck" ||
+          normalizedKey === "external_code" ||
+          normalizedKey === "bid" ||
+          normalizedKey === "fbclid" ||
+          normalizedKey.startsWith("utm_") ||
+          normalizedKey.startsWith("fb");
+
+        if (!shouldForward || !normalizedValue) {
+          return;
+        }
+
+        url.searchParams.set(normalizedKey, normalizedValue);
+        forwardedParameters.push({ key: normalizedKey, value: normalizedValue });
       });
-      link.setAttribute("href", url.toString());
+
+      if (forwardedParameters.length > 0) {
+        console.info(
+          "[GuiaVibracional] Parâmetros de rastreamento encaminhados para o checkout:",
+          forwardedParameters
+        );
+        link.setAttribute("href", url.toString());
+      }
     }
 
     createDays();
