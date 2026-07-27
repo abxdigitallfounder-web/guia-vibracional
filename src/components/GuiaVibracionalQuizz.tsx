@@ -1287,7 +1287,7 @@ const QUIZ_HTML = `
 
   <div id="fq-player-mount"></div>
 
-<a href="https://pay.hotmart.com/Y106873180M?off=pjzj6vi9&amp;bid=1784925297355" class="fq-buy-button" id="fq-buy-button">
+<a href="https://pay.hotmart.com/V106779085M?off=ch5t1mx8&amp;xcod=49959090&amp;external_code=49959090&amp;bid=1785178384973" class="fq-buy-button" id="fq-buy-button">
   Comprar ahora
 </a>
 
