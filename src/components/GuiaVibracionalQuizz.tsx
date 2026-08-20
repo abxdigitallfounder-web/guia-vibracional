@@ -1543,7 +1543,7 @@ export default function GuiaVibracionalQuizz() {
         ) => void;
       };
 
-      player.id = "vid-6a5a2625ce2f01c3a2a21f82";
+      player.id = "vid-6a8663cd71b068178c1b115d";
 
       player.setAttribute(
         "style",
@@ -1579,10 +1579,10 @@ export default function GuiaVibracionalQuizz() {
       playerMount.appendChild(player);
 
       const vturbScriptUrl =
-        "https://scripts.converteai.net/d4622977-5c1b-4ced-962b-a0739fd35c0b/players/6a5a2625ce2f01c3a2a21f82/v4/player.js";
+        "https://scripts.converteai.net/852d320d-ed7a-4d4e-b9d3-8f62ee63de84/players/6a8663cd71b068178c1b115d/v4/player.js";
 
       const existingScript = document.querySelector(
-        'script[src*="6a5a2625ce2f01c3a2a21f82/v4/player.js"]'
+        'script[src*="6a8663cd71b068178c1b115d/v4/player.js"]'
       );
 
       if (!existingScript) {
